@@ -1,0 +1,16 @@
+info:
+  name: " 10 - Verificar cuenta (200)"
+  type: http
+  seq: 9
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/api/dev/users/7344bc5b-ebd4-4ebd-b47c-fb2fe202eb72/verify"
+  auth: none
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

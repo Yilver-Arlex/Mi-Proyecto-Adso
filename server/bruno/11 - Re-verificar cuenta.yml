@@ -1,0 +1,16 @@
+info:
+  name: 11 - Re-verificar cuenta
+  type: http
+  seq: 11
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/api/dev/users/a4d5b491-97e1-43cc-8bcd-8748c0b4960a/verify"
+  auth: none
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
