@@ -1,0 +1,39 @@
+info:
+  name: 05 - Correo inválido (400)
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/dev/users"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "esto-no-es-un-correo"
+      }
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Correo invalido (400)", function(){
+          expect(res.status).to.equal(400);
+          expect(res.body.code).to.equal("VALIDATION_ERROR");
+          expect(res.body.success).to.equal(false)
+        } )
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+docs: |-
+  Envía: una petición POST con el correo "esto-no-es-un-correo", que tiene un formato inválido.
+  Debe responder: HTTP 400 Bad Request, success false y code "VALIDATION_ERROR".
+  Demuestra:
+    - El backend valida el formato del correo mediante isValidEmail()
+    - Los datos inválidos son rechazados antes de llegar al repositorio
+    - El servidor devuelve un error controlado de validación.

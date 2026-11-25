@@ -1,0 +1,30 @@
+info:
+  name: 01 - Health Check
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/health"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Health Check (200)", function () {
+          expect(res.status).to.equal(200);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+docs: |-
+  Envía: una petición GET a /api/health sin parámetros ni body.
+
+  Debe responder: HTTP 200 OK y confirmar que el servidor está funcionando (healthy).
+
+  Demuestra: que la API está activa y puede responder solicitudes HTTP.

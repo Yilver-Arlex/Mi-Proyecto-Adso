@@ -1,0 +1,32 @@
+info:
+  name: 09 - Buscar por ID (200)
+  type: http
+  seq: 9
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/dev/users/a35f7e09-3cf9-44ad-9a62-c8051bfd42b6"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Buscar por ID (200)", function () {
+          expect(res.status).to.equal(200);
+          expect(res.body.seccess).to.equal(true);
+          expect(res.body.data).to.not.have.property("password_hash");
+        })
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+docs: |-
+  Envía: una petición GET con un UUID válido y correspondiente a un usuario existente, mediante el parámetro de ruta :id.
+
+  Debe responder: HTTP 200 OK, success true y los datos del usuario encontrado.
+
+  Demuestra: La validación del UUID mediante isUuid(), la lectura del identificador mediante req.params.id, la búsqueda de un usuario por su UUID en PostgreSQL y la exclusión de password_hash de los datos devueltos.

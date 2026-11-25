@@ -1,0 +1,32 @@
+info:
+  name: 11 - Re-verificar cuenta (409)
+  type: http
+  seq: 11
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/api/dev/users/a35f7e09-3cf9-44ad-9a62-c8051bfd42b6/verify"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Re-verificar cuenta (409)", function() {
+          expect(res.status).to.equal(409);
+          expect(res.body.success).to.equal(false);
+          expect(res.body.code).to.equal("USER_ALREADY_VERIFIED");
+        })
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+docs: |-
+  Envia: Una peticion PATCH con una parametro query (UUID) + /verify
+
+  Debe responder:409 con success false, error "Conflict", code "USER_ALREADY_VERIFIED"
+
+  Demuestra: El backend detecta que la cuenta ya está verificada, se evita ejecutar nuevamente la verificación de una cuenta ya verificada y el backend devuelve un error controlado con estado HTTP 409.

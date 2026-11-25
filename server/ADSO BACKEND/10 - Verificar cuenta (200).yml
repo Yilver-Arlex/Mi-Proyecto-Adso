@@ -1,0 +1,36 @@
+info:
+  name: " 10 - Verificar cuenta (200)"
+  type: http
+  seq: 10
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/api/dev/users/a35f7e09-3cf9-44ad-9a62-c8051bfd42b6/verify"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Verficar cuenta (200)", function () {
+          expect(res.status).to.equal(200);
+          expect(res.body.success).to.equal(true);
+          expect(res.body.data).to.not.have.property("password_hash");
+        })
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+docs: |-
+  Envía: una petición PATCH con un UUID válido y correspondiente a un usuario existente que todavía no está verificado, mediante el parámetro de ruta :id.
+
+  Debe responder: HTTP 200 OK, success true e is_verified true.
+
+  Demuestra:
+  - La validación del UUID mediante isUuid().
+  - La lectura del identificador mediante req.params.id.
+  - La actualización del estado is_verified de false a true.
+  - La exclusión de password_hash de los datos devueltos.
