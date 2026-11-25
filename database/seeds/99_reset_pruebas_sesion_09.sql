@@ -24,3 +24,4 @@ SELECT id, encode(digest('token-demo-sesion-06', 'sha256'), 'hex'), NOW() + INTE
 ON CONFLICT (token_hash) DO UPDATE SET expires_at = EXCLUDED.expires_at;
 
 COMMIT;
+
